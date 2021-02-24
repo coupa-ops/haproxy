@@ -1,7 +1,7 @@
 property :install_type, String, name_property: true, equal_to: %w(package source)
 property :conf_template_source, String, default: 'haproxy.cfg.erb'
 property :conf_cookbook, String, default: 'haproxy'
-property :conf_file_mode, String, default: '0644'
+property :conf_file_mode, String, default: '0440'
 property :bin_prefix, String, default: '/usr'
 property :config_dir,  String, default: '/etc/haproxy'
 property :config_file, String, default: lazy { ::File.join(config_dir, 'haproxy.cfg') }
@@ -108,15 +108,15 @@ action :create do
     end
 
     directory new_resource.config_dir do
-      owner new_resource.haproxy_user
+      owner "root"
       group new_resource.haproxy_group
-      mode '0755'
+      mode '0750'
       recursive true
       action :create
     end
 
     template new_resource.config_file do
-      owner new_resource.haproxy_user
+      owner "root"
       group new_resource.haproxy_group
       mode new_resource.conf_file_mode
       sensitive new_resource.sensitive
