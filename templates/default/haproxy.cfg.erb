@@ -108,6 +108,10 @@ defaults
 <% value.each do | array_element | %>
   <%= option %> <%= array_element %>
 <% end -%>
+<% elsif value.is_a?(Hash) %>
+<% value.each do | key, value | %>
+  <%= option %> <%= key %> <%= value %>
+<% end -%>
 <% else %>
   <%= option %> <%= value %>
 <% end -%>
